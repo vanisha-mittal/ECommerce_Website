@@ -1,0 +1,88 @@
+<% layout('layouts/boilerplate') %>
+    <%- include('../partials/navbar.ejs') %>
+        <%- include('../partials/flash.ejs') %>
+
+
+
+
+            <div class="row">
+                <div class="col-lg-6 mt-3">
+                    <div class="card mx-auto" style="width: 18rem;">
+                        <img class="card-img-top" src="<%= foundProduct.img %>" alt="Card image cap">
+                        <div class="card-body">
+                            <h3 class="card-title">
+                                <%= foundProduct.name %>
+                            </h3>
+                            <h5 class="card-title">
+                                <%= foundProduct.price %>
+                            </h5>
+                            <p class="card-text">
+                                <%= foundProduct.desc %>
+                            </p>
+                            <a href="#" class="btn btn-primary">Buy Product</a>
+                            <form action="/user/<%= foundProduct._id%>" method="POST">
+                                <button class="btn btn-sm btn-secondary">Add product to cart</button>
+                            </form>
+                            <% if(currentUser && currentUser.role==='seller' ){ %>
+                                <a href="/product/<%= foundProduct._id%>/edit" class="btn btn-light">Edit</a>
+                                <% } %>
+                                <% if(currentUser && currentUser.role==='seller' && foundProduct.author.equals(currentUser._id)){ %>
+                                    <form action="/product/<%=foundProduct._id%>?_method=DELETE" method="POST">
+                                        <button class="btn btn-sm btn-danger">Delete</button>
+                                    </form>
+                                    <% } %>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <h1 class="display-5"> Leave a review</h1>
+                    <form action="/product/<%= foundProduct._id%>/review" method="POST">
+                        <div>
+                            <fieldset class="starability-basic">
+                                <input type="radio" id="no-rate" class="input-no-rate" name="rating" value="0" checked
+                                    aria-label="No rating." />
+                                <input type="radio" id="first-rate1" name="rating" value="1" />
+                                <label for="first-rate1" title="Terrible">1 star</label>
+                                <input type="radio" id="first-rate2" name="rating" value="2" />
+                                <label for="first-rate2" title="Not good">2 stars</label>
+                                <input type="radio" id="first-rate3" name="rating" value="3" />
+                                <label for="first-rate3" title="Average">3 stars</label>
+                                <input type="radio" id="first-rate4" name="rating" value="4" />
+                                <label for="first-rate4" title="Very good">4 stars</label>
+                                <input type="radio" id="first-rate5" name="rating" value="5" />
+                                <label for="first-rate5" title="Amazing">5 stars</label>
+                            </fieldset>
+                        </div>
+                        <div class="mb-3">
+                            <label for="comment" class="form-label">Comment:</label>
+                            <textarea name="comment" id="comment" rows="3" class="form-control"></textarea>
+                        </div>
+                        <button class="btn btn-sm btn-success">Add Review</button>
+                    </form>
+                    <div class="mt-3">
+                        <%for(let review of foundProduct.reviews){ %>
+                            <div class="card mt-3">
+                                <div class="card-header">
+                                    <p class="starability-result" data-rating="<%=review.rating%>"">
+                                    Rated: <%=review.rating%> stars
+                                </p>
+                            </div>
+                            <div class=" card-body">
+                                    <p class="card-text">Comment:<br>
+                                        <%=review.comment%>
+                                    </p>
+                                    <p>
+                                        <%=review.createdAt.toDateString()%>
+                                    </p>
+                                    <a href="#" class="btn btn-sm btn-danger">Delete</a>
+
+                                </div>
+                            </div>
+                            <%}%>
+                    </div>
+                </div>
+            </div>
+
+            </body>
+
+            </html>

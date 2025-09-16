@@ -1,0 +1,43 @@
+kisme kya kya require krna
+
+
+app- instance--ek jagah se dusri jagan nhi jate--use .Router(mini instance)
+
+db.products.deleteMany({});
+
+ejs mate -- view engine
+
+name ke andar voh jo schema m diya h
+
+
+schema m dekhenge 1:1 ya 1:many -- aur uska schema fir
+
+product m revies ki id store krenge aur relationship build krenge
+
+
+
+mongoose middlewares--
+
+
+JOI- schema descriptive language
+
+cookies-client size storage-  cookie-parser  key-value pair- server client ko bjeta hai- stateful-previousn state pr depend krte hain
+
+cookies are not secure
+
+
+agar cookies use krni hai toh use--signed cookies
+mostly used session-- server side storage
+express-session
+
+
+passport-- authentication middleware for nodejs 
+
+
+google,linkedIn, etc login-- OAuth
+
+static methods-- jo directly schema pr apply ho jaye
+
+
+
+

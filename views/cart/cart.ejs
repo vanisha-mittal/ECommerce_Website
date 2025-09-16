@@ -1,0 +1,19 @@
+<% layout('layouts/boilerplate') %>
+    <%- include('../partials/navbar.ejs') %>
+
+
+        <ul>
+            <%for(let item of user.cart){%>
+                <li><%=item.name %> --><%=item.price %> </li>
+            <%}%>
+        </ul>
+        <form action="payment_gateway/payumoney" method="POST">
+<input class="amount" type="hidden" name="amount" value=""/>
+<input class="con" type="hidden" name="phone" value="" />
+<input type="hidden" name="service_provider" 
+ value="payu_paisa"/>
+<input type="hidden" class="product" name="productinfo" 
+ value="educational purpose"/>
+ 
+ <input type="submit" value="Pay"/>
+</form>

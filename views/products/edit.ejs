@@ -1,0 +1,31 @@
+<% layout('layouts/boilerplate') %>
+    <%- include('../partials/navbar.ejs') %>
+
+
+        <div class="row">
+            <div class="col-lg-6 mx-auto">
+                <form action="/product/<%=foundProduct._id%>?_method=PATCH" method="POST">
+                    <div class="mb-3">
+                        <label for="name">Name: </label>
+                        <input type="text" class="form-control" id="name" name="name" placeholder="Enter product name" value="<%=foundProduct.name%>">
+                    </div>
+                    <div class="mb-3">
+                        <label for="img">Image: </label>
+                        <input type="text" class="form-control" id="img" name="img" placeholder="Enter product image" value="<%=foundProduct.img%>">
+                    </div>
+                    <div class="mb-3">
+                        <label for="price">Price: </label>
+                        <input type="number" class="form-control" id="price" name="price" placeholder="Enter product price" value="<%=foundProduct.price%>">
+                    </div>
+                    <div class="mb-3">
+                        <label for="desc">Description: </label>
+                        <textarea name="desc" id="desc" rows="3" placeholder="Enter description of product" ><%=foundProduct.desc%></textarea>
+                    </div>
+                    <button class="btn btn-sm btn-success" type="submit">Edit Product</button>
+                </form>
+            </div>
+        </div>
+
+        </body>
+
+        </html>

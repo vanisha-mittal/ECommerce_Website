@@ -1,0 +1,38 @@
+<% layout('layouts/boilerplate') %>
+    <%- include('../partials/navbar.ejs') %>
+        <%- include('../partials/flash.ejs') %>
+
+
+
+            <div class="row">
+                <% for(let item of products) { %>
+                    <div class="col-lg-4 mt-3">
+                        <div class="card mx-auto" style="width: 18rem;">
+                            <img class="card-img-top" src="<%= item.img %>" alt="Card image cap">
+                            <span class="badge rounded-pill bg-light text-dark w-25 position-absolute translate-middle-y" style="top:35%;left:5%"><%=item.avgRating%> &star; | <%=item.reviews.length%></span>
+                            <div class="card-body">
+                                <h3 class="card-title">
+                                    <%= item.name %>
+                                </h3>
+                                <h5 class="card-title">
+                                    <%= item.price %>
+                                </h5>
+                                <p class="card-text">
+                                    <%= item.desc %>
+                                </p>
+                                <%if(item.reviews.length){%>
+                                    <p class="text-muted"><%=item.reviews.length%></p>
+                                <%}else{%>
+                                    <p class="text-muted">No reviews</p>
+                                <%}%>
+                                <a href="/product/<%= item._id%>" class="btn btn-primary">View Product</a>
+                               
+                            </div>
+                        </div>
+                    </div>
+                    <% } %>
+            </div>
+
+            </body>
+
+            </html>

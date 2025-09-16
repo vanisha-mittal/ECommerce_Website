@@ -1,0 +1,75 @@
+<% layout('layouts/boilerplate') %>
+    <%- include('../partials/navbar.ejs') %>
+
+
+        <div class="row">
+            <div class="col-lg-6 mx-auto">
+                <form action="/products" method="POST" class="needs-validation" novalidate>
+                    <div class="mb-3">
+                        <label for="name">Name: </label>
+                        <input type="text" class="form-control" id="name" name="name" placeholder="Enter product name"
+                            required>
+                        <div class="valid-feedback">
+                            Looks good!
+                        </div>
+                        <div class="invalid-feedback">
+                            Please choose a username.
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="img">Image: </label>
+                        <input type="text" class="form-control" id="img" name="img" placeholder="Enter product image"
+                            required>
+                            <div class="valid-feedback">
+                            Looks good!
+                        </div>
+                        <div class="invalid-feedback">
+                            Please choose a username.
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="price">Price: </label>
+                        <input type="number" class="form-control" id="price" name="price"
+                            placeholder="Enter product price" required>
+                            <div class="valid-feedback">
+                            Looks good!
+                        </div>
+                        <div class="invalid-feedback">
+                            Please choose a username.
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="desc">Description: </label>
+                        <textarea name="desc" id="desc" rows="3" placeholder="Enter description of product"></textarea>
+                    </div>
+                    <button class="btn btn-sm btn-success" type="submit">Add Product</button>
+                </form>
+            </div>
+        </div>
+
+
+        <script>
+            // immediately invoke func expression
+            (function () {
+                'use strict'
+
+                // Fetch all the forms we want to apply custom Bootstrap validation styles to
+                var forms = document.querySelectorAll('.needs-validation')
+
+                // Loop over them and prevent submission
+                Array.prototype.slice.call(forms)
+                    .forEach(function (form) {
+                        form.addEventListener('submit', function (event) {
+                            if (!form.checkValidity()) {
+                                event.preventDefault()
+                                event.stopPropagation()
+                            }
+
+                            form.classList.add('was-validated')
+                        }, false)
+                    })
+            })()
+        </script>
+        </body>
+
+        </html>
