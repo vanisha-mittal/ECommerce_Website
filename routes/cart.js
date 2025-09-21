@@ -20,7 +20,24 @@ router.post('/user/:productId/add' , isLoggedIn , async(req,res)=>{
     await user.save();
     res.redirect('/user/cart');
 })
+router.delete('/cart/:id', async (req, res) => {
+    try {
+        const userId = req.user._id; // assuming user is logged in
+        const productId = req.params.id;
 
+        // Pull the item from user's cart array
+        await User.findByIdAndUpdate(userId, {
+            $pull: { cart: productId }
+        });
+
+        req.flash('success', 'Item removed from cart!');
+        res.redirect('/user/cart'); // redirect back to cart page
+    } catch (e) {
+        console.error('❌ Error removing item from cart:', e);
+        req.flash('error', 'Could not remove item from cart.');
+        res.redirect('/cart');
+    }
+});
 
 
 

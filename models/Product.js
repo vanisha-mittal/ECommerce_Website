@@ -39,19 +39,16 @@ const productSchema=new mongoose.Schema({
 })
 
 
-productSchema.statics.updateAvgRating = async function (productId) {
-    const product = await this.findById(productId).populate("reviews");
-    if (product && product.reviews.length > 0) {
-        const total = product.reviews.reduce((sum, r) => sum + r.rating, 0);
-        product.avgRating = total / product.reviews.length;
-    } else {
-        product.avgRating = 0;
+
+productSchema.pre("save", async function (next) {
+    if (this.isModified("reviews") && this.reviews.length > 0) {
+        // Populate reviews to access rating
+        await this.populate("reviews");
+        const total = this.reviews.reduce((sum, r) => sum + r.rating, 0);
+        this.avgRating = total / this.reviews.length;
+    } else if (this.reviews.length === 0) {
+        this.avgRating = 0;
     }
-    await product.save();
-    return product;
-};
-productSchema.post("save", async function (doc, next) {
-    await doc.constructor.updateAvgRating(doc._id);
     next();
 });
 productSchema.post("findOneAndDelete", async function(product){

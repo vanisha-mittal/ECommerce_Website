@@ -1,91 +1,83 @@
-const Product = require("../models/Product");
+// controllers/product.js
+const Product = require('../models/Product');
+const Review = require('../models/Review');
 
-
-
-const showAllProducts = async (req, res) => {
+module.exports.index = async (req, res) => {
     try {
-        const products = await Product.find({});
-        res.render('products/index', { products });
+        let products = await Product.find({});
+        res.render('products/index.ejs', { products });
+    } catch (e) {
+        res.status(500).render('error', { err: e.message });
     }
-    catch (e) {
-        res.status(500).render('error',{err:e.message})
-    }
-}
+};
 
-
-const productForm = (req, res) => {
+module.exports.renderNewForm = (req, res) => {
     try {
         res.render('products/new');
+    } catch (e) {
+        res.status(500).render('error', { err: e.message });
     }
-    catch (e) {
-         res.status(500).render('error',{err:e.message})
-    }  
-}
+};
 
-const createProduct = async (req, res) => {
-
+module.exports.showProduct = async (req, res) => {
     try {
-        const { name, img, desc, price } = req.body;
-        await Product.create({ name, img, price: parseFloat(price), desc,author:req.user._id });
-        req.flash('success', 'Successfully added a new product!');
-        res.redirect('/products');
+        let { id } = req.params;
+        let foundProduct = await Product.findById(id).populate('reviews');
+        res.render('products/show', { foundProduct, success: req.flash('success') });
+    } catch (e) {
+        res.status(500).render('error', { err: e.message });
     }
-    catch (e) {
-        res.status(500).render('error', { err: e.message })
-    }
-}
+};
 
-const showProduct = async(req, res) => {
-
+module.exports.createProduct = async (req, res) => {
     try {
-        const { id } = req.params;
-        const product = await Product.findById(id).populate('reviews');
-        res.render('products/show', { product}); 
-    }
-    catch (e) {
-        res.status(500).render('error',{err:e.message})
-    }
-}
+        let { name, img, price, desc } = req.body;
+        console.log("Body received:", req.body);
 
-const editProductForm = async (req, res) => {
-    
+        let newProduct = await Product.create({
+            name,
+            img,
+            price,
+            desc,
+            author: req.user ? req.user._id : null
+        });
+        req.flash('success', 'Product added successfully!!');
+        return res.redirect(`/product/${newProduct._id}`);
+    } catch (e) {
+        return res.status(500).render('error', { err: e.message });
+    }
+};
+
+
+module.exports.renderEditForm = async (req, res) => {
     try {
-        const { id } = req.params;
-        const product = await Product.findById(id);
-        res.render('products/edit', { product });
+        let { id } = req.params;
+        let foundProduct = await Product.findById(id);
+        res.render('products/edit', { foundProduct });
+    } catch (e) {
+        res.status(500).render('error', { err: e.message });
     }
-    catch (e) {
-        res.status(500).render('error',{err:e.message})
-    }  
-}
+};
 
-const updateProduct = async (req, res) => {
-
+module.exports.updateProduct = async (req, res) => {
     try {
-        const { id } = req.params;
-        const { name, price, img, desc } = req.body;
-        await Product.findByIdAndUpdate(id, { name, price, desc, img });
-        req.flash('success', 'Edit Your Product Successfully');
-        res.redirect(`/products/${id}`);
+        let { id } = req.params;
+        let { name, img, price, desc } = req.body;
+        await Product.findByIdAndUpdate(id, { name, img, price, desc });
+        req.flash('success', 'Product edited successfully!!');
+        res.redirect(`/product/${id}`);
+    } catch (e) {
+        res.status(500).render('error', { err: e.message });
     }
-    catch (e) {
-        res.status(500).render('error',{err:e.message})
-        
-    } 
-}
+};
 
-
-const deleteProduct = async (req, res) => {
-    
+module.exports.deleteProduct = async (req, res) => {
     try {
-        const { id } = req.params;
+        let { id } = req.params;
         await Product.findByIdAndDelete(id);
+        req.flash('success', 'Product deleted successfully!!');
         res.redirect('/products');
+    } catch (e) {
+        res.status(500).render('error', { err: e.message });
     }
-    catch (e) {
-        res.status(500).render('error',{err:e.message})   
-    }
-}
-
-
-module.exports = {showAllProducts , productForm , createProduct , showProduct , editProductForm , updateProduct , deleteProduct }
+};

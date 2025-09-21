@@ -23,7 +23,7 @@
                             <form class="d-inline-block" action="/user/<%=foundProduct._id%>/add" method="POST">
                                 <button>Add To Cart</button>
                             </form>
-                            <% if (currentUser && currentUser.role === 'seller' && foundProduct.author && String(foundProduct.author) === String(currentUser._id)) { %>
+                            <% if (currentUser && currentUser.role === 'seller' && foundProduct.author && foundProduct.author.equals(currentUser._id) ) { %>
   <a href="/product/<%= foundProduct._id %>/edit" class="btn btn-light">Edit</a>
   <form action="/product/<%= foundProduct._id %>?_method=DELETE" method="POST" class="d-inline-block">
     <button class="btn btn-sm btn-danger">Delete</button>
