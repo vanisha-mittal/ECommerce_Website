@@ -1,31 +1,51 @@
-<% layout('layouts/boilerplate') %>
-    <%- include('../partials/navbar.ejs') %>
+<%- include('../layouts/boilerplate') %>
+
+<div class="container mt-5">
+  <h1 class="text-center text-white mb-4">Edit Product</h1>
+  <form action="/product/<%= foundProduct._id %>?_method=PATCH" method="POST" id="editProductForm">
+    <div class="mb-3">
+      <label for="name" class="form-label text-orange">Name</label>
+      <input type="text" name="name" id="name" class="form-control" value="<%= foundProduct.name %>" required>
+    </div>
+
+    <div class="mb-3">
+      <label for="img" class="form-label text-orange">Image URL</label>
+      <input type="text" name="img" id="img" class="form-control" value="<%= foundProduct.img %>" required>
+    </div>
+
+    <div class="mb-3">
+      <label for="price" class="form-label text-orange">Price</label>
+      <input type="number" name="price" id="price" class="form-control" value="<%= foundProduct.price %>" min="1" required>
+    </div>
+
+    <div class="mb-3">
+      <label for="desc" class="form-label text-orange">Description</label>
+      <textarea name="desc" id="desc" class="form-control" rows="4" required><%= foundProduct.desc %></textarea>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Update Product</button>
+    <a href="/products" class="btn btn-outline-primary">Cancel</a>
+  </form>
+</div>
 
 
-        <div class="row">
-            <div class="col-lg-6 mx-auto">
-                <form action="/product/<%=foundProduct._id%>?_method=PATCH" method="POST">
-                    <div class="mb-3">
-                        <label for="name">Name: </label>
-                        <input type="text" class="form-control" id="name" name="name" placeholder="Enter product name" value="<%=foundProduct.name%>">
-                    </div>
-                    <div class="mb-3">
-                        <label for="img">Image: </label>
-                        <input type="text" class="form-control" id="img" name="img" placeholder="Enter product image" value="<%=foundProduct.img%>">
-                    </div>
-                    <div class="mb-3">
-                        <label for="price">Price: </label>
-                        <input type="number" class="form-control" id="price" name="price" placeholder="Enter product price" value="<%=foundProduct.price%>">
-                    </div>
-                    <div class="mb-3">
-                        <label for="desc">Description: </label>
-                        <textarea name="desc" id="desc" rows="3" placeholder="Enter description of product" ><%=foundProduct.desc%></textarea>
-                    </div>
-                    <button class="btn btn-sm btn-success" type="submit">Edit Product</button>
-                </form>
-            </div>
-        </div>
+<script>
+  document.getElementById("editProductForm").addEventListener("submit", function(e) {
+    const name = document.getElementById("name").value.trim();
+    const img = document.getElementById("img").value.trim();
+    const price = document.getElementById("price").value;
+    const desc = document.getElementById("desc").value.trim();
 
-        </body>
+    if (!name || !img || !price || !desc) {
+      e.preventDefault();
+      alert("All fields are required!");
+      return;
+    }
 
-        </html>
+    if (price <= 0) {
+      e.preventDefault();
+      alert("Price must be greater than 0!");
+      return;
+    }
+  });
+</script>

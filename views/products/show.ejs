@@ -20,17 +20,17 @@
                                 <%= foundProduct.desc %>
                             </p>
                             <a href="#" class="btn btn-primary">Buy Product</a>
-                            <form action="/user/<%= foundProduct._id%>" method="POST">
-                                <button class="btn btn-sm btn-secondary">Add product to cart</button>
+                            <form class="d-inline-block" action="/user/<%=foundProduct._id%>/add" method="POST">
+                                <button>Add To Cart</button>
                             </form>
-                            <% if(currentUser && currentUser.role==='seller' ){ %>
-                                <a href="/product/<%= foundProduct._id%>/edit" class="btn btn-light">Edit</a>
-                                <% } %>
-                                <% if(currentUser && currentUser.role==='seller' && foundProduct.author.equals(currentUser._id)){ %>
-                                    <form action="/product/<%=foundProduct._id%>?_method=DELETE" method="POST">
-                                        <button class="btn btn-sm btn-danger">Delete</button>
-                                    </form>
-                                    <% } %>
+                            <% if (currentUser && currentUser.role === 'seller' && foundProduct.author && String(foundProduct.author) === String(currentUser._id)) { %>
+  <a href="/product/<%= foundProduct._id %>/edit" class="btn btn-light">Edit</a>
+  <form action="/product/<%= foundProduct._id %>?_method=DELETE" method="POST" class="d-inline-block">
+    <button class="btn btn-sm btn-danger">Delete</button>
+  </form>
+<% } %>
+
+                            
                         </div>
                     </div>
                 </div>
@@ -74,7 +74,6 @@
                                     <p>
                                         <%=review.createdAt.toDateString()%>
                                     </p>
-                                    <a href="#" class="btn btn-sm btn-danger">Delete</a>
 
                                 </div>
                             </div>

@@ -12,7 +12,7 @@ const LocalStrategy=require('passport-local');
 const User=require('./models/User');
 
 
-if(process.env.NODE_ENV!=='production'){
+if(process.env.NODE_ENV !=='production'){
   require('dotenv').config();
 }
 
@@ -22,7 +22,7 @@ const reviewRoute=require('./routes/review');
 const authRoute=require('./routes/auth');
 const cartRoute=require('./routes/cart');
 
-const dbURL=process.env.dbURL || 'mongodb://127.0.0.1:27017/Ecommerse';
+const dbURL=process.env.dbURL || 'mongodb+srv://vanishamittal1409_db_user:JbS4VZqUNOY8BfKV@cluster0.tcavfsj.mongodb.net/';
 mongoose.connect(dbURL)
 .then(()=>{console.log("DB connected");
 })
@@ -69,6 +69,10 @@ passport.use(new LocalStrategy(User.authenticate()));
 
 //seeding
 // seedDB()
+app.get('/', (req, res) => {
+  res.render('home');
+});
+
 app.use(productRoute);
 app.use(reviewRoute);
 app.use(authRoute);

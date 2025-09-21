@@ -1,11 +1,21 @@
-<%if(success && success.length){%>
-    <div class="alert alert-success" role="alert">
-        <%=success%>
-    </div>
-<%}%>
+<% if(success && success.length > 0) { %>
+  <div class="alert alert-success flash-msg text-center" role="alert">
+    <%= success %>
+  </div>
+<% } %>
+<% if(error && error.length > 0) { %>
+  <div class="alert alert-danger flash-msg text-center" role="alert">
+    <%= error %>
+  </div>
+<% } %>
 
-<% if(error && error.length){ %>
-    <div class="alert alert-danger" role="alert">
-        <%=error%>
-    </div>
-<%}%>
+<script>
+
+  setTimeout(() => {
+    document.querySelectorAll(".flash-msg").forEach(msg => {
+      msg.style.transition = "opacity 0.5s ease";
+      msg.style.opacity = "0";
+      setTimeout(() => msg.remove(), 500);
+    });
+  }, 3000);
+</script>

@@ -39,14 +39,14 @@ const isSeller=(req,res,next)=>{
     next();
 }
 const isProductAuthor = async(req,res,next)=>{
-        let {id} = req.params; //product id
-        let product = await Product.findById(id); //entire product
-        if(!product.author.equals(req.user._id)){
-            req.flash('error' , 'You are not the authorised user');
-            return res.redirect('/products');
-        }
-        next();
+    let {id} = req.params;
+    const product = await Product.findById(id);
+    console.log(product.author);
+    console.log(req.user);
+    if(!product.author.equals(req.user._id)){
+        req.flash('error' , 'you donot have the permission to do that');
+        return res.redirect(`/product/${id}`);
+    }
+    next();
 }
-
-
 module.exports={validateProduct,validateReview,isLoggedIn,isSeller,isProductAuthor};

@@ -7,8 +7,9 @@ const User = require('../models/User');
 
 router.get('/user/cart' ,isLoggedIn , async(req,res)=>{
     let user = await User.findById(req.user._id).populate('cart');
-    res.render('cart/cart' ,  {user})
-})
+    const totalAmount = user.cart.reduce((sum , curr)=> sum+curr.price , 0)
+    const productInfo = user.cart.map((p)=>p.desc).join(',');
+    res.render('cart/cart' , {user, totalAmount , productInfo });})
 
 router.post('/user/:productId/add' , isLoggedIn , async(req,res)=>{
     let {productId} = req.params;

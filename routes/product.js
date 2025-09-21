@@ -23,16 +23,6 @@ router.get('/product/new',isLoggedIn,isSeller, (req, res) => {
 })
 
 
-router.post('/products',isLoggedIn,isSeller, validateProduct, async (req, res) => {
-    try {
-        let { name, img, price, desc } = req.body;
-        await Product.create({ name, img, price, desc, author:req.user });
-        req.flash('success','Product edited successfully!!');
-        res.redirect('/products');
-    } catch (e) {
-        res.status(500).render('error', { err: e.message });
-    }
-})
 router.get('/product/:id',isLoggedIn, async (req, res) => {
     try {
         let { id } = req.params;
@@ -42,8 +32,19 @@ router.get('/product/:id',isLoggedIn, async (req, res) => {
         res.status(500).render('error', { err: e.message });
     }
 })
+router.post('/products',isLoggedIn,isSeller, validateProduct, async (req, res) => {
+    try {
+        let { name, img, price, desc } = req.body;
+        await Product.create({ name, img, price, desc, author:req.user });
+        req.flash('success','Product added successfully!!');
+        res.redirect('/products');
+    } catch (e) {
+        res.status(500).render('error', { err: e.message });
+    }
+})
 
-router.get('/product/:id/edit',isLoggedIn, async (req, res) => {
+
+router.get('/product/:id/edit',isLoggedIn, isProductAuthor, async (req, res) => {
     try {
         let { id } = req.params;
         let foundProduct = await Product.findById(id);
@@ -52,7 +53,7 @@ router.get('/product/:id/edit',isLoggedIn, async (req, res) => {
         res.status(500).render('error', { err: e.message });
     }
 })
-router.patch('/product/:id',isLoggedIn,validateProduct, async (req, res) => {
+router.patch('/product/:id',isLoggedIn,isProductAuthor,validateProduct, async (req, res) => {
     try {
         let { id } = req.params;
         let { name, img, price, desc } = req.body;

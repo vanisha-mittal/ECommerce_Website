@@ -45,12 +45,17 @@ router.post('/login',
 })
 
 //logout
-router.get("/logout",(req,res)=>{
-    ()=>{
-        req.logout();
-    }
-    req.flash("success","goodbye")
-    res.redirect("/login");
-})
+router.get("/logout", (req, res, next) => {
+  req.logout(function (err) {
+    if (err) { return next(err); }
+
+    req.session.destroy(() => {
+      res.clearCookie("connect.sid");  
+      req.flash("success", "Goodbye!");
+      res.redirect("/login");
+    });
+  });
+});
+
 
 module.exports = router;
