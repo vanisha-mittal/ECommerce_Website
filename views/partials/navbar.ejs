@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg custom-navbar navbar-dark">
+<nav class="navbar navbar-expand-lg custom-navbar navbar-dark bg-dark">
   <div class="container-fluid">
     <a class="navbar-brand fw-bold text-uppercase text-orange" href="/">Shopping App</a>
 
@@ -10,24 +10,24 @@
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <a class="nav-link" href="/products">Home</a>
+          <a class="nav-link text-white" href="/products">Home</a>
         </li>
 
         <% if(currentUser && currentUser.role === 'seller'){ %>
         <li class="nav-item">
-          <a class="nav-link" href="/product/new">+ New Product</a>
+          <a class="nav-link text-orange fw-bold" href="/product/new">+ New Product</a>
         </li>
         <% } %>
       </ul>
 
       <div class="d-flex align-items-center">
         <% if(!currentUser){ %>
-          <a href="/login" class="btn btn-outline-primary mx-2">Login</a>
-          <a href="/register" class="btn btn-primary mx-2">Register</a>
+          <a href="/login" class="btn btn-outline-orange mx-2">Login</a>
+          <a href="/register" class="btn btn-orange mx-2">Register</a>
         <% } else { %>
-          <span class="navbar-text me-3">👋 Hello, <%= currentUser.username %></span>
+          <span class="navbar-text text-white me-3">👋 Hello, <%= currentUser.username %></span>
 
-          <a href="/user/cart" class="btn btn-outline-primary position-relative mx-2">
+          <a href="/user/cart" class="btn btn-outline-orange position-relative mx-2">
             <i class="fa-solid fa-cart-shopping"></i>
             <% if(currentUser.cart.length > 0){ %>
               <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
@@ -36,7 +36,7 @@
             <% } %>
           </a>
 
-          <a href="/logout" class="btn btn-primary mx-2">Logout</a>
+          <a href="/logout" class="btn btn-orange mx-2">Logout</a>
         <% } %>
       </div>
     </div>

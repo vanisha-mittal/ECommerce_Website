@@ -1,75 +1,69 @@
 <% layout('layouts/boilerplate') %>
-    <%- include('../partials/navbar.ejs') %>
+<%- include('../partials/navbar.ejs') %>
 
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-lg-6 mx-auto">
+      <h2 class="text-center text-orange mb-4">Add New Product</h2>
 
-        <div class="row">
-            <div class="col-lg-6 mx-auto">
-                <form action="/products" method="POST" class="needs-validation" novalidate>
-                    <div class="mb-3">
-                        <label for="name">Name: </label>
-                        <input type="text" class="form-control" id="name" name="name" placeholder="Enter product name"
-                            required>
-                        <div class="valid-feedback">
-                            Looks good!
-                        </div>
-                        <div class="invalid-feedback">
-                            Please choose a username.
-                        </div>
-                    </div>
-                    <div class="mb-3">
-                        <label for="img">Image: </label>
-                        <input type="text" class="form-control" id="img" name="img" placeholder="Enter product image"
-                            required>
-                            <div class="valid-feedback">
-                            Looks good!
-                        </div>
-                        <div class="invalid-feedback">
-                            Please choose a username.
-                        </div>
-                    </div>
-                    <div class="mb-3">
-                        <label for="price">Price: </label>
-                        <input type="number" class="form-control" id="price" name="price"
-                            placeholder="Enter product price" required>
-                            <div class="valid-feedback">
-                            Looks good!
-                        </div>
-                        <div class="invalid-feedback">
-                            Please choose a username.
-                        </div>
-                    </div>
-                    <div class="mb-3">
-                        <label for="desc">Description: </label>
-                        <textarea  class="form-control" name="desc" id="desc" rows="3" placeholder="Enter description of product"></textarea>
-                    </div>
-                    <button class="btn btn-sm btn-success" type="submit">Add Product</button>
-                </form>
-            </div>
+      <form action="/products" method="POST" class="needs-validation shadow-sm p-4 rounded bg-dark text-white" novalidate>
+        
+        <!-- Name -->
+        <div class="mb-3">
+          <label for="name" class="form-label text-orange fw-semibold">Name</label>
+          <input type="text" class="form-control bg-dark text-white border border-secondary" id="name" name="name" placeholder="Enter product name" required>
+          <div class="valid-feedback">Looks good!</div>
+          <div class="invalid-feedback">Please enter a product name.</div>
         </div>
 
+        <!-- Image -->
+        <div class="mb-3">
+          <label for="img" class="form-label text-orange fw-semibold">Image URL</label>
+          <input type="url" class="form-control bg-dark text-white border border-secondary" id="img" name="img" placeholder="Enter product image URL" required>
+          <div class="valid-feedback">Looks good!</div>
+          <div class="invalid-feedback">Please provide a valid image URL.</div>
+        </div>
 
-        <script>
-            // immediately invoke func expression
-            (function () {
-                'use strict'
+        <!-- Price -->
+        <div class="mb-3">
+          <label for="price" class="form-label text-orange fw-semibold">Price (₹)</label>
+          <input type="number" class="form-control bg-dark text-white border border-secondary" id="price" name="price" placeholder="Enter product price" min="1" required>
+          <div class="valid-feedback">Looks good!</div>
+          <div class="invalid-feedback">Please enter a valid price greater than 0.</div>
+        </div>
 
-                // Fetch all the forms we want to apply custom Bootstrap validation styles to
-                var forms = document.querySelectorAll('.needs-validation')
+        <!-- Description -->
+        <div class="mb-3">
+          <label for="desc" class="form-label text-orange fw-semibold">Description</label>
+          <textarea class="form-control bg-dark text-white border border-secondary" name="desc" id="desc" rows="3" placeholder="Enter product description" required></textarea>
+          <div class="valid-feedback">Looks good!</div>
+          <div class="invalid-feedback">Please enter a product description.</div>
+        </div>
 
-                // Loop over them and prevent submission
-                Array.prototype.slice.call(forms)
-                    .forEach(function (form) {
-                        form.addEventListener('submit', function (event) {
-                            if (!form.checkValidity()) {
-                                event.preventDefault()
-                                event.stopPropagation()
-                            }
+        <!-- Buttons -->
+        <div class="d-flex justify-content-between">
+          <button class="btn btn-orange" type="submit">Add Product</button>
+          <a href="/products" class="btn btn-outline-orange">Cancel</a>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
 
-                            form.classList.add('was-validated')
-                        }, false)
-                    })
-            })()
-        </script>
-        </body>
+<script>
+  (function () {
+    'use strict';
+    var forms = document.querySelectorAll('.needs-validation');
 
-        </html>
+    Array.prototype.slice.call(forms)
+      .forEach(function (form) {
+        form.addEventListener('submit', function (event) {
+          if (!form.checkValidity()) {
+            event.preventDefault();
+            event.stopPropagation();
+          }
+          form.classList.add('was-validated');
+        }, false);
+      });
+  })();
+</script>

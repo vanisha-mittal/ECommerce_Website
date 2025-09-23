@@ -1,39 +1,47 @@
 <% layout('layouts/boilerplate') %>
 
 <div class="container mt-5">
-  <h1 class="text-center text-white mb-4">Edit Product</h1>
-  <form action="/product/<%= foundProduct._id %>?_method=PATCH" method="POST" id="editProductForm">
+  <h1 class="text-center text-orange mb-4">Edit Product</h1>
+
+  <form action="/product/<%= foundProduct._id %>?_method=PATCH" method="POST" id="editProductForm" class="mx-auto shadow-sm p-4 rounded" style="max-width: 600px; background-color:#1a1a1a; color:#fff;">
+    
+    <!-- Product Name -->
     <div class="mb-3">
-      <label for="name" class="form-label text-orange">Name</label>
-      <input type="text" name="name" id="name" class="form-control" value="<%= foundProduct.name %>" required>
+      <label for="name" class="form-label text-orange fw-semibold">Name</label>
+      <input type="text" name="name" id="name" class="form-control bg-dark text-white border border-secondary" value="<%= foundProduct.name %>" required>
     </div>
 
+    <!-- Product Image -->
     <div class="mb-3">
-      <label for="img" class="form-label text-orange">Image URL</label>
-      <input type="text" name="img" id="img" class="form-control" value="<%= foundProduct.img %>" required>
+      <label for="img" class="form-label text-orange fw-semibold">Image URL</label>
+      <input type="url" name="img" id="img" class="form-control bg-dark text-white border border-secondary" value="<%= foundProduct.img %>" required>
     </div>
 
+    <!-- Price -->
     <div class="mb-3">
-      <label for="price" class="form-label text-orange">Price</label>
-      <input type="number" name="price" id="price" class="form-control" value="<%= foundProduct.price %>" min="1" required>
+      <label for="price" class="form-label text-orange fw-semibold">Price (₹)</label>
+      <input type="number" name="price" id="price" class="form-control bg-dark text-white border border-secondary" value="<%= foundProduct.price %>" min="1" required>
     </div>
 
+    <!-- Description -->
     <div class="mb-3">
-      <label for="desc" class="form-label text-orange">Description</label>
-      <textarea name="desc" id="desc" class="form-control" rows="4" required><%= foundProduct.desc %></textarea>
+      <label for="desc" class="form-label text-orange fw-semibold">Description</label>
+      <textarea name="desc" id="desc" class="form-control bg-dark text-white border border-secondary" rows="4" required><%= foundProduct.desc %></textarea>
     </div>
 
-    <button type="submit" class="btn btn-primary">Update Product</button>
-    <a href="/products" class="btn btn-outline-primary">Cancel</a>
+    <!-- Buttons -->
+    <div class="d-flex justify-content-between">
+      <button type="submit" class="btn btn-orange">Update Product</button>
+      <a href="/products" class="btn btn-outline-orange">Cancel</a>
+    </div>
   </form>
 </div>
-
 
 <script>
   document.getElementById("editProductForm").addEventListener("submit", function(e) {
     const name = document.getElementById("name").value.trim();
     const img = document.getElementById("img").value.trim();
-    const price = document.getElementById("price").value;
+    const price = parseFloat(document.getElementById("price").value);
     const desc = document.getElementById("desc").value.trim();
 
     if (!name || !img || !price || !desc) {

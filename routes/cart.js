@@ -33,7 +33,6 @@ router.delete('/cart/:id', async (req, res) => {
         req.flash('success', 'Item removed from cart!');
         res.redirect('/user/cart'); // redirect back to cart page
     } catch (e) {
-        console.error('❌ Error removing item from cart:', e);
         req.flash('error', 'Could not remove item from cart.');
         res.redirect('/cart');
     }

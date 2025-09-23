@@ -21,8 +21,9 @@ const productRoute=require('./routes/product');
 const reviewRoute=require('./routes/review');
 const authRoute=require('./routes/auth');
 const cartRoute=require('./routes/cart');
+const productApi = require('./routes/api/productapi');
 
-const dbURL=process.env.dbURL || 'mongodb+srv://vanishamittal1409_db_user:JbS4VZqUNOY8BfKV@cluster0.tcavfsj.mongodb.net/';
+const dbURL=process.env.dbURL || 'mongodb://localhost:27017/shopping-app-2';
 mongoose.connect(dbURL)
 .then(()=>{console.log("DB connected");
 })
@@ -77,7 +78,7 @@ app.use(productRoute);
 app.use(reviewRoute);
 app.use(authRoute);
 app.use(cartRoute);
-
+app.use(productApi);
 
 
 

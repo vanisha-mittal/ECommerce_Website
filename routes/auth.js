@@ -45,13 +45,18 @@ router.post('/login',
 })
 
 //logout
+// Logout route
 router.get("/logout", (req, res, next) => {
   req.logout(function (err) {
-    if (err) { return next(err); }
+    if (err) return next(err);
 
-    req.session.destroy(() => {
-      res.clearCookie("connect.sid");  
-      req.flash("success", "Goodbye!");
+    // Save flash message before destroying session
+    req.flash("success", "Goodbye!");
+
+    // Destroy session and redirect
+    req.session.destroy((err) => {
+      if (err) return next(err);
+      res.clearCookie("connect.sid");
       res.redirect("/login");
     });
   });
