@@ -32,8 +32,6 @@ module.exports.showProduct = async (req, res) => {
 module.exports.createProduct = async (req, res) => {
     try {
         let { name, img, price, desc } = req.body;
-        console.log("Body received:", req.body);
-
         let newProduct = await Product.create({
             name,
             img,

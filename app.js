@@ -22,6 +22,9 @@ const reviewRoute=require('./routes/review');
 const authRoute=require('./routes/auth');
 const cartRoute=require('./routes/cart');
 const productApi = require('./routes/api/productapi');
+const paymentRoutes = require('./routes/payment');  
+
+
 
 const dbURL=process.env.dbURL || 'mongodb://localhost:27017/shopping-app-2';
 mongoose.connect(dbURL)
@@ -79,6 +82,7 @@ app.use(reviewRoute);
 app.use(authRoute);
 app.use(cartRoute);
 app.use(productApi);
+app.use(paymentRoutes); 
 
 
 
